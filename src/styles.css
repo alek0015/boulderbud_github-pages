@@ -89,7 +89,7 @@ body {
 }
 
 #parallax1 {
-    background-image: url("./src/assets/bright-climbing-wall.jpg");
+    background-image: url("./assets/bright-climbing-wall.jpg");
     width: 100%;
     margin:0;
     background-position: center;
@@ -100,7 +100,7 @@ body {
 }
 
 #parallax2 {
-    background-image: url("./src/assets/ledges-grips-wall.jpg");
+    background-image: url("./assets/ledges-grips-wall.jpg");
     width: 100%;
     margin:0;
     background-position: center;
@@ -111,7 +111,7 @@ body {
 }
 
 .bg {
-    background-image: url("./src/assets/bright-climbing-wall.jpg");
+    background-image: url("./assets/bright-climbing-wall.jpg");
     width: 100%;
     margin:0;
     background-position: center;
@@ -240,7 +240,7 @@ li {
 }
 
 #background-panel1 {
-    background-image: url("./src/assets/ledges-grips-wall.jpg");
+    background-image: url("./assets/ledges-grips-wall.jpg");
     width: 100%;
     margin: 0;
     background-position: center;
@@ -251,7 +251,7 @@ li {
 }
 
 #background-panel2 {
-    background-image: url("./src/assets/bright-climbing-wall.jpg");
+    background-image: url("./assets/bright-climbing-wall.jpg");
     width: 100%;
     margin: 0;
     background-position: center;

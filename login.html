@@ -8,12 +8,12 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"> </script>
         <!-- Favicon -->
-        <link rel="icon" type="image/png" href="/src/assets/bb_monke.png"/>
-        <link rel="stylesheet" href="/src/styles.css"/>
+        <link rel="icon" type="image/png" href="./src/assets/bb_monke.png"/>
+        <link rel="stylesheet" href="./src/styles.css"/>
         <!-- Reusable footer -->
-        <script src="/footer.js" type="text/javascript" defer></script>
+        <script src="./footer.js" type="text/javascript" defer></script>
         <!-- Reusable left portion of the header-->
-        <script src="/header-ls.js" type="text/javascript" defer></script>
+        <script src="./header-ls.js" type="text/javascript" defer></script>
         <!-- FontAwesome Icons -->
         <script src="https://kit.fontawesome.com/1123bfab37.js" crossorigin="anonymous"></script>
         <!-- Google Fonts -->
@@ -61,9 +61,9 @@
                         <h2 id="lightText" style="padding: 10px; text-align: center; font-family: 'Contrail One', sans-serif;">- OR -</h2>
                         <!-- Google Sign-Up Button -->
                         <div style="text-align: center;">
-                            <input id="googleSignupB" type="image" src="/src/assets/google_signin.png" style="width: 200px; height:auto; padding-top: 10px;">
+                            <input id="googleSignupB" type="image" src="./src/assets/google_signin.png" style="width: 200px; height:auto; padding-top: 10px;">
                         </div>
-                        <a id="donthave-have_link" href="signup.html" style="text-align: center; display: block; margin-top: 35px; color: rgb(111, 193, 213);">Don't have an account? Sign up</a>
+                        <a id="donthave-have_link" href=./signup.html" style="text-align: center; display: block; margin-top: 35px; color: rgb(111, 193, 213);">Don't have an account? Sign up</a>
                     </div>
                 </div>
             </div>
@@ -72,64 +72,62 @@
         <footer-component></footer-component>
         <!-- Script checking for authenticated user -->
         <script type="module">
-                import { auth, db } from '/src/firebase.js';
-                import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-                const i = 0;
-                auth.onAuthStateChanged(user => {
-                    if (user && i===0) {
-                        // User is signed in
-                        window.location.href = "/profile.html";
-                    } 
-                    i++;
-                });
+            import { auth, db } from './src/firebase.js';
+            import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+            const i = 0;
+            auth.onAuthStateChanged(user => {
+                if (user && i===0) {
+                    // User is signed in
+                    window.location.href = "./profile.html";
+                } 
+                i++;
+            });
         </script>
-            <script type="module">
-                            import { auth } from '/src/firebase.js';
-                            import {signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-                            
-                            document.querySelector("form").addEventListener("submit", async (e) =>{
-                                e.preventDefault();
-                                const formData = new FormData(e.target);
-                                const email = formData.get("email");
-                                const password = formData.get("password");
-                                //Use Firebase Authentication with Email and Password to sign in existing user
-                                try {
-                                    const userCred = await signInWithEmailAndPassword(auth, email, password);
+        <script type="module">
+            import {signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+            
+            document.querySelector("form").addEventListener("submit", async (e) =>{
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const email = formData.get("email");
+                const password = formData.get("password");
+                //Use Firebase Authentication with Email and Password to sign in existing user
+                try {
+                    const userCred = await signInWithEmailAndPassword(auth, email, password);
 
-                                    document.getElementById("feedback").textContent = "Welcome back!";
-                                    document.getElementById("feedback").style.backgroundColor = "lightgreen";
-                                    setTimeout(() => {
-                                        window.location.href = "/profile.html";
-                                    }, 1500);
-                                    
-                                } catch (err) {
-                                    document.getElementById("feedback").textContent = "Email or password incorrect. Please try again.";
-                                    document.getElementById("feedback").style.backgroundColor = "coral";
-                                }
-                                //clean up form
-                                document.querySelector("form").reset();
-                            });
-                        </script>
-                        <script>
-                            const passwordInput = document.getElementById("password");
-                            const revealPasswordIcon = document.getElementById("icon");
+                    document.getElementById("feedback").textContent = "Welcome back!";
+                    document.getElementById("feedback").style.backgroundColor = "lightgreen";
+                    setTimeout(() => {
+                        window.location.href = "./profile.html";
+                    }, 1500);
+                    
+                } catch (err) {
+                    document.getElementById("feedback").textContent = "Email or password incorrect. Please try again.";
+                    document.getElementById("feedback").style.backgroundColor = "coral";
+                }
+                //clean up form
+                document.querySelector("form").reset();
+            });
+        </script>
+        <script>
+            const passwordInput = document.getElementById("password");
+            const revealPasswordIcon = document.getElementById("icon");
 
-                            revealPasswordIcon.addEventListener("click", () => {
-                                const newType = passwordInput.getAttribute("type") === "password" ? "text" : "password";
-                                passwordInput.setAttribute("type", newType);
-                                //Swap icon:
-                                if(newType === "text"){
-                                    document.getElementById("icon").classList.remove("fa-eye");
-                                    document.getElementById("icon").classList.add("fa-eye-slash");
-                                } else {
-                                    document.getElementById("icon").classList.remove("fa-eye-slash");
-                                    document.getElementById("icon").classList.add("fa-eye");
-                                }
-                            });
-                        </script>
+            revealPasswordIcon.addEventListener("click", () => {
+                const newType = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+                passwordInput.setAttribute("type", newType);
+                //Swap icon:
+                if(newType === "text"){
+                    document.getElementById("icon").classList.remove("fa-eye");
+                    document.getElementById("icon").classList.add("fa-eye-slash");
+                } else {
+                    document.getElementById("icon").classList.remove("fa-eye-slash");
+                    document.getElementById("icon").classList.add("fa-eye");
+                }
+            });
+        </script>
 
         <script type="module">
-            import { auth } from '/src/firebase.js';
             import { getRedirectResult, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
             const provider = new GoogleAuthProvider();
@@ -142,7 +140,7 @@
                 .then((result) => {
                     console.log("Google user:", result.user);
                     setTimeout(() => {
-                        window.location.href = "/profile.html";
+                        window.location.href = "./profile.html";
                     }, 1000);
                 })
                 .catch((error) => {
