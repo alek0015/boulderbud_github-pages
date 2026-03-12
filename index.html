@@ -182,8 +182,9 @@
   </body>
   <script type="module">
     import { auth } from './src/firebase.js';
-    import { signOut } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
+    /* Script handling log out button: */
     document.getElementById("logoutB").addEventListener("click", async (e) => {
         e.preventDefault();
         try {
@@ -196,11 +197,8 @@
             console.error("Error signing out: ", err.message);
         }
     });
-  </script>
-  <!-- Script checking for authenticated user -->
-  <script type="module">
-    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
+    /* Script checking for authenticated user: */
     onAuthStateChanged( auth, (user) => {
       document.querySelectorAll('.logged-in').forEach(el => el.style.display = user ? 'block' : 'none');
       document.querySelectorAll('.logged-out').forEach(el => el.style.display = user ? 'none' : 'block');

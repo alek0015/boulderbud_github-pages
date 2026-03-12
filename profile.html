@@ -120,12 +120,22 @@
          <!-- Footer -->
         <footer-component></footer-component>
     </body>
-    <!-- Script checking for authenticated user -->
+    
     <script type="module">
         import { auth, db } from './src/firebase.js';
-        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+        import { onAuthStateChanged, verifyBeforeUpdateEmail, reauthenticateWithCredential, 
+            EmailAuthProvider, updatePassword, signOut, 
+            deleteUser, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
         import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+        const changeEmailForm = document.getElementById('changeEmailForm');
+        const changeEmailFormSubmitButton = document.getElementById('submitEmailChangeB');
+        const authenticationModal = document.getElementById("reauthModal");
+        const authForm = document.getElementById("reauthForm");
+        const changePasswordForm = document.getElementById('changePasswordForm');
+        const changePasswordFormSubmitButton = document.getElementById('submitPasswordChangeB');
+        const deleteAccButton = document.getElementById('deleteAccountB'); 
 
+        /* Script checking for authenticated user: */
         onAuthStateChanged( auth, async (user) => {
             if (user){ //i.e. user is logged in
                 console.log("Current user:", user);
@@ -155,15 +165,8 @@
                 window.location.href = "./index.html";
             }
         });
-    </script>
-    <script type="module">
-        import {verifyBeforeUpdateEmail, reauthenticateWithCredential, EmailAuthProvider} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-
-        const changeEmailForm = document.getElementById('changeEmailForm');
-        const changeEmailFormSubmitButton = document.getElementById('submitEmailChangeB');
-        const authenticationModal = document.getElementById("reauthModal");
-        const authForm = document.getElementById("reauthForm");
-
+    
+        /* Script handling email change form submission: */
         changeEmailFormSubmitButton.addEventListener('click', async (e) => {
             e.preventDefault();
             const formData = new FormData(changeEmailForm);
@@ -246,13 +249,8 @@
                 authForm.addEventListener('submit', handleSubmit);
             });
         }
-    </script>
-    <script type="module">
-        import {updatePassword} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-
-        const changePasswordForm = document.getElementById('changePasswordForm');
-        const changePasswordFormSubmitButton = document.getElementById('submitPasswordChangeB');
-
+        
+        /* Script handling password change form submission: */
         changePasswordFormSubmitButton.addEventListener('click', async (e) => {
             e.preventDefault();
             const formData = new FormData(changePasswordForm);
@@ -280,10 +278,8 @@
                 }
             }
         });
-    </script>
-    <script type="module">
-        import { signOut } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-
+        
+        /* Script handling logout button: */
         document.getElementById("logoutB").addEventListener("click", async (e) => {
             e.preventDefault();
             try {
@@ -296,13 +292,7 @@
                 console.error("Error signing out: ", err.message);
             }
         });
-    </script>
-    <!-- Account deletion script -->
-    <script type="module">
-        import {deleteUser, reauthenticateWithCredential, EmailAuthProvider} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-
-        const deleteAccButton = document.getElementById('deleteAccountB'); 
-
+        /* Script handling account deletion: */
         deleteAccButton.addEventListener('click', async (e) => {
             e.preventDefault();
             const user = auth.currentUser;

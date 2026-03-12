@@ -84,12 +84,13 @@
                                         </div>
                                     </div>
                                 </div> <!-- Feedback container end-->
-                                <!-- Script checking for authenticated user -->
+            
                                 <script type="module">
                                     import { auth, db } from './src/firebase.js';
                                     import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
                                     import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
-
+                                    
+                                    /* Script checking for authenticated user */
                                     onAuthStateChanged( auth, async (user) => {
                                         if (user){ //i.e. user is logged in
                                             console.log("Current user:", user);

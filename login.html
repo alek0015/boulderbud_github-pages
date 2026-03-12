@@ -70,11 +70,15 @@
         </div>
         <!-- Footer -->
         <footer-component></footer-component>
-        <!-- Script checking for authenticated user -->
+
         <script type="module">
             import { auth, db } from './src/firebase.js';
-            import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+            import { onAuthStateChanged, getRedirectResult, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+            import {signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+            
+            /* Script checking for authenticated user: */
             const i = 0;
+
             auth.onAuthStateChanged(user => {
                 if (user && i===0) {
                     // User is signed in
@@ -82,10 +86,8 @@
                 } 
                 i++;
             });
-        </script>
-        <script type="module">
-            import {signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
             
+            /* Scripts handling sign-ins with email and password: */
             document.querySelector("form").addEventListener("submit", async (e) =>{
                 e.preventDefault();
                 const formData = new FormData(e.target);
@@ -108,28 +110,8 @@
                 //clean up form
                 document.querySelector("form").reset();
             });
-        </script>
-        <script>
-            const passwordInput = document.getElementById("password");
-            const revealPasswordIcon = document.getElementById("icon");
 
-            revealPasswordIcon.addEventListener("click", () => {
-                const newType = passwordInput.getAttribute("type") === "password" ? "text" : "password";
-                passwordInput.setAttribute("type", newType);
-                //Swap icon:
-                if(newType === "text"){
-                    document.getElementById("icon").classList.remove("fa-eye");
-                    document.getElementById("icon").classList.add("fa-eye-slash");
-                } else {
-                    document.getElementById("icon").classList.remove("fa-eye-slash");
-                    document.getElementById("icon").classList.add("fa-eye");
-                }
-            });
-        </script>
-
-        <script type="module">
-            import { getRedirectResult, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-
+            /* Script handling Google sign-ins: */
             const provider = new GoogleAuthProvider();
             console.log(provider);
             const googleSignupButton = document.getElementById("googleSignupB");
@@ -146,6 +128,23 @@
                 .catch((error) => {
                     console.error(error);
                 });
+            });
+        </script>
+        <script>
+            const passwordInput = document.getElementById("password");
+            const revealPasswordIcon = document.getElementById("icon");
+
+            revealPasswordIcon.addEventListener("click", () => {
+                const newType = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+                passwordInput.setAttribute("type", newType);
+                //Swap icon:
+                if(newType === "text"){
+                    document.getElementById("icon").classList.remove("fa-eye");
+                    document.getElementById("icon").classList.add("fa-eye-slash");
+                } else {
+                    document.getElementById("icon").classList.remove("fa-eye-slash");
+                    document.getElementById("icon").classList.add("fa-eye");
+                }
             });
         </script>
     </body>

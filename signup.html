@@ -68,25 +68,25 @@
         </div>
         <!-- Footer -->
         <footer-component></footer-component>
-        <!-- Script checking for authenticated user -->
+        
         <script type="module">
-                import { auth, db } from './src/firebase.js';
-                import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-                const i = 0;
-                auth.onAuthStateChanged(user => {
-                    if (user && i===0) {
-                        // User is signed in
-                        window.location.href = "./profile.html";
-                    } 
-                    i++;
-                });
-        </script>
-        </script>
-        <script type="module">
-            import { db } from './src/firebase.js';
-            import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+            /* Script checking for authenticated user: */
+            import { auth, db } from './src/firebase.js';
+            import { onAuthStateChanged, createUserWithEmailAndPassword, 
+                getRedirectResult, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
             import { doc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
-
+            const provider = new GoogleAuthProvider();
+            const googleSignupButton = document.getElementById("googleSignupB");
+            const i = 0;
+            auth.onAuthStateChanged(user => {
+                if (user && i===0) {
+                    // User is signed in
+                    window.location.href = "./profile.html";
+                } 
+                i++;
+            });
+            
+            /* Script for handling form submission: */
             document.querySelector("form").addEventListener("submit", async (e) => {
                 e.preventDefault(); //Stop form from traditional submission
                 const formData = new FormData(e.target);
@@ -117,13 +117,8 @@
                     }, 1500);
                 }
             });
-        </script>
-        <script type="module">
-            import { getRedirectResult, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-
-            const provider = new GoogleAuthProvider();
-            const googleSignupButton = document.getElementById("googleSignupB");
-
+        
+            /* Script for handling Google Sign-Up: */
             googleSignupButton.addEventListener("click",(e) => {
                 e.preventDefault();
                 signInWithPopup(auth, provider)

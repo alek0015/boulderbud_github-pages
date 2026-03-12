@@ -74,35 +74,32 @@
     </body>
     <!-- Script checking for authenticated user -->
     <script type="module">
-            import { auth, db } from './src/firebase.js';
-            import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-            import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+        import { auth, db } from './src/firebase.js';
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+        import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
-            onAuthStateChanged( auth, async (user) => {
-                if (user){ //i.e. user is logged in
-                    console.log("Current user:", user);
-                    if(user.photoURL){ //if user has a profile picture, display it
-                        document.getElementById("user-image").src = user.photoURL;
-                    }
-                    //Get number of attempts remaining for the user:
-                    const userRef = doc(db, "users", user.uid);
-                    const docSnap = await getDoc(userRef);
-                    console.log(docSnap);
-                    if (docSnap.exists()){
-                        const data = docSnap.data();
-                        console.log(data);
-                        document.getElementById("numUploadsLeft").innerText = data.uploads_left_today;
-                        document.getElementById("uploads-limit-progress").value = data.uploads_left_today;
-                    }
-                } else {
-                    window.location.href = "./index.html";
+        onAuthStateChanged( auth, async (user) => {
+            if (user){ //i.e. user is logged in
+                console.log("Current user:", user);
+                if(user.photoURL){ //if user has a profile picture, display it
+                    document.getElementById("user-image").src = user.photoURL;
                 }
-            });
-    </script>
-    <!-- Script decrementing number of remaining uploads -->
-    <script type="module">
-        import { updateDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
-        
+                //Get number of attempts remaining for the user:
+                const userRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(userRef);
+                console.log(docSnap);
+                if (docSnap.exists()){
+                    const data = docSnap.data();
+                    console.log(data);
+                    document.getElementById("numUploadsLeft").innerText = data.uploads_left_today;
+                    document.getElementById("uploads-limit-progress").value = data.uploads_left_today;
+                }
+            } else {
+                window.location.href = "./index.html";
+            }
+        });
+
+        /* Script decrementing number of remaining uploads:*/
         async function subtractRemainingUploads() {
             const user = auth.currentUser;
             if (!user) {
